@@ -1,0 +1,28 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model YuGiOhDB {
+  CardName      String
+  id            Int @id
+  CardType      String?
+  Attribute     String?
+  Property      String?
+  Types         String?
+  Level         Int?
+  ATK           Int?
+  DEF           Int?
+  Link          Int?
+  PendulumScale Int?
+  Description   String?
+
+
+}
