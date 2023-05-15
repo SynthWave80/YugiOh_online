@@ -14,7 +14,11 @@ export const cardsRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.yuGiOhDB.findMany({
       where: {
-        NOT: { id: 0 },
+        NOT: {
+          id: {
+            in: [0, 3],
+          },
+        },
       },
       take: 100,
       distinct: ["id"],

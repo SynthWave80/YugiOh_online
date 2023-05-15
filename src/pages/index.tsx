@@ -6,7 +6,7 @@ import { api } from "@/utils/api";
 import PaginatedItems from "@/components/pagination";
 
 const Home: NextPage = () => {
-  const { data, error } = api.cards.getAll.useQuery();
+  const { data, error, refetch } = api.cards.getAll.useQuery();
 
   return (
     <>
