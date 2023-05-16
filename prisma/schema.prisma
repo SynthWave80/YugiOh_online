@@ -4,28 +4,25 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("POSTGRES_PRISMA_URL")
-  directUrl         = env("POSTGRES_URL_NON_POOLING")
-  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-model YuGiOhDB {
-  CardName      String? @db.VarChar(256)
+model YuGiOhDb {
+  CardName      String  @db.VarChar(512)
   id            Int @id
-  CardType      String? @db.VarChar
-  Attribute     String? @db.VarChar
-  Property      String? @db.VarChar
-  Types         String? @db.VarChar
+  CardType      String? @db.VarChar(512)
+  Attribute     String? @db.VarChar(512)
+  Property      String? @db.VarChar(512)
+  Types         String? @db.VarChar(512)
   Level         Int?
   ATK           Int?
   DEF           Int?
   Link          Int?
   PendulumScale Int?
-  Description   String? @db.VarChar
+  Description   String? @db.VarChar(1024)
 
   
 }
