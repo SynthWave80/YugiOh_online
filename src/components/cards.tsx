@@ -19,6 +19,10 @@ import { BiLink } from "react-icons/bi";
 import { HiOutlineScale } from "react-icons/hi";
 import { MdOutlineDescription } from "react-icons/md";
 import { api } from "@/utils/api";
+import { Alert } from "react-bootstrap";
+import { Formik, Field } from "formik";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 const Cards = ({ item }: { item: YuGiOhDB }) => {
   const { data, error, refetch } = api.cards.getAll.useQuery();
@@ -27,12 +31,16 @@ const Cards = ({ item }: { item: YuGiOhDB }) => {
   console.log(item.id);
   const [showDelete, setShowDelete] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
   const deleteHandleClose = () => setShowDelete(false);
   const deleteHandleShow = () => setShowDelete(true);
 
   const previewHandleClose = () => setShowPreview(false);
   const previewHandleShow = () => setShowPreview(true);
+
+  const editHandleClose = () => setShowEdit(false);
+  const editHandleShow = () => setShowEdit(true);
 
   const callDeteteCard = async (id: number) => {
     await deleteCard(id);
@@ -66,9 +74,11 @@ const Cards = ({ item }: { item: YuGiOhDB }) => {
           <Dropdown.Toggle variant="none"></Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1">Edit</Dropdown.Item>
+            <Dropdown.Item href="#/action-1" onClick={editHandleShow}>
+              Edit
+            </Dropdown.Item>
             <Dropdown.Item href="#/action-2" onClick={deleteHandleShow}>
-              Delete
+              <div className="text-red-600">Delete</div>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -107,19 +117,19 @@ const Cards = ({ item }: { item: YuGiOhDB }) => {
           <div className="p-4">
             <div className="flex items-center gap-4  ">
               <VscTypeHierarchySub size={30} />
-              Type: {item.CardType}
+              Type: {item.CardType?.replace("NULL", "None")}
             </div>
             <div className="flex items-center gap-4 ">
               <MdEditAttributes size={30} />
-              Attributes: {item.Attribute}
+              Attributes: {item.Attribute?.replace("NULL", "None")}
             </div>
             <div className="flex items-center gap-4 ">
               <VscSymbolProperty size={30} />
-              Property: {item.Property}
+              Property: {item.Property?.replace("NULL", "None")}
             </div>
             <div className="flex items-center gap-4 ">
               <VscTypeHierarchySub size={30} />
-              Types: {item.Types}
+              Types: {item.Types?.replace("NULL", "None")}
             </div>
             <div className="flex items-center gap-4 ">
               <SiLevelsdotfyi size={30} />
@@ -143,13 +153,63 @@ const Cards = ({ item }: { item: YuGiOhDB }) => {
             </div>
             <div className="flex flex-col items-center border-t-2 pt-3 ">
               <h2>Description:</h2>
-              {item.Description}
+              {item.Description?.replace("NULL", "None")}
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={previewHandleClose}>
             Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showEdit} onHide={editHandleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Editing ...</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Alert variant="warning">
+            You are editing the card:{item.CardName} with the id:{item.id}
+          </Alert>
+
+          <Formik
+            initialValues={{
+              firstName: "",
+              lastName: "",
+              email: "",
+            }}
+            onSubmit={async (values) => {
+              await new Promise((r) => setTimeout(r, 500));
+              alert(JSON.stringify(values, null, 2));
+            }}
+          >
+            <Form>
+              <div className="flex">
+                <InputGroup className="mb-3 flex flex-col">
+                  <InputGroup.Text>Card Name</InputGroup.Text>
+                  <InputGroup.Text>Card Type</InputGroup.Text>
+                  <InputGroup.Text>Attribute</InputGroup.Text>
+                  <InputGroup.Text>Property</InputGroup.Text>
+                  <InputGroup.Text>Types</InputGroup.Text>
+                  <InputGroup.Text>Level</InputGroup.Text>
+                  <InputGroup.Text>ATK</InputGroup.Text>
+                  <InputGroup.Text>DEF</InputGroup.Text>
+                  <InputGroup.Text>LINK</InputGroup.Text>
+                  <InputGroup.Text>PendulumScale</InputGroup.Text>
+                  <InputGroup.Text>Description</InputGroup.Text>
+                </InputGroup>
+              </div>
+              <button type="submit">Submit</button>
+            </Form>
+          </Formik>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={editHandleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={editHandleClose}>
+            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>

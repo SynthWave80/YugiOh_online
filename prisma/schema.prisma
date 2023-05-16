@@ -4,25 +4,28 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("POSTGRES_PRISMA_URL")
+  directUrl         = env("POSTGRES_URL_NON_POOLING")
+  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model YuGiOhDB {
-  CardName      String?
+  CardName      String? @db.VarChar(256)
   id            Int @id
-  CardType      String?
-  Attribute     String?
-  Property      String?
-  Types         String?
+  CardType      String? @db.VarChar
+  Attribute     String? @db.VarChar
+  Property      String? @db.VarChar
+  Types         String? @db.VarChar
   Level         Int?
   ATK           Int?
   DEF           Int?
   Link          Int?
   PendulumScale Int?
-  Description   String?
+  Description   String? @db.VarChar
 
-
+  
 }
