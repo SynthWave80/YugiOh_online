@@ -12,7 +12,7 @@ export const cardsRouter = createTRPCRouter({
       };
     }),
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.yuGiOhDB.findMany({
+    return ctx.prisma.yuGiOhDb.findMany({
       where: {
         NOT: {
           id: {
@@ -26,7 +26,7 @@ export const cardsRouter = createTRPCRouter({
   }),
 
   getCard: publicProcedure.input(z.number()).query(({ ctx, input }) => {
-    return ctx.prisma.yuGiOhDB.findUnique({
+    return ctx.prisma.yuGiOhDb.findUnique({
       where: { id: input },
     });
   }),
@@ -49,7 +49,7 @@ export const cardsRouter = createTRPCRouter({
       })
     )
     .mutation(({ ctx, input }) => {
-      return ctx.prisma.yuGiOhDB.create({
+      return ctx.prisma.yuGiOhDb.create({
         data: input,
       });
     }),
@@ -73,20 +73,20 @@ export const cardsRouter = createTRPCRouter({
       })
     )
     .mutation(({ ctx, input }) => {
-      return ctx.prisma.yuGiOhDB.update({
+      return ctx.prisma.yuGiOhDb.update({
         where: { id: input.id },
         data: input,
       });
     }),
 
   deleteCard: publicProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.prisma.yuGiOhDB.delete({
+    return ctx.prisma.yuGiOhDb.delete({
       where: { id: input },
     });
   }),
 
   getCardsLike: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-    return ctx.prisma.yuGiOhDB.findMany({
+    return ctx.prisma.yuGiOhDb.findMany({
       where: {
         CardName: { contains: input },
       },

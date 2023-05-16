@@ -1,5 +1,5 @@
 import { cards } from "@/utils/cardsInterface";
-import { YuGiOhDB } from "@prisma/client";
+import { YuGiOhDb } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import ReactPaginate from "react-paginate";
@@ -15,8 +15,8 @@ function Items({
   currentItems,
   cards,
 }: {
-  currentItems: YuGiOhDB[] | undefined;
-  cards: YuGiOhDB[] | undefined;
+  currentItems: YuGiOhDb[] | undefined;
+  cards: YuGiOhDb[] | undefined;
 }) {
   return (
     <div className="grid grid-cols-4 gap-4 pb-5">
@@ -32,7 +32,7 @@ export default function PaginatedItems({
   cards,
 }: {
   itemsPerPage: number;
-  cards: YuGiOhDB[] | undefined;
+  cards: YuGiOhDb[] | undefined;
 }) {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.

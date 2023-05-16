@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
-import { YuGiOhDB } from "@prisma/client";
+import { YuGiOhDb } from "@prisma/client";
 import { HiAdjustments } from "react-icons/hi";
 import { TfiViewListAlt } from "react-icons/tfi";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -24,7 +24,7 @@ import { Formik, Field } from "formik";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
-const Cards = ({ item }: { item: YuGiOhDB }) => {
+const Cards = ({ item }: { item: YuGiOhDb }) => {
   const { data, error, refetch } = api.cards.getAll.useQuery();
   const { mutateAsync: deleteCard } = api.cards.deleteCard.useMutation();
 
