@@ -65,12 +65,6 @@ export default function PaginatedItems({
 
   return (
     <div className="flex min-w-full flex-col items-center justify-center">
-      <div className="grid grid-cols-4 gap-4 pb-5">
-        {isLoading &&
-          Array.from({ length: itemsPerPage }).map((_, index) => (
-            <Skeleton key={index} />
-          ))}
-      </div>
       <Items currentItems={currentItems} cards={cards} isLoading={isLoading} />
       <ReactPaginate
         breakLabel="..."

@@ -59,13 +59,13 @@ var Form_1 = require("react-bootstrap/Form");
 var Cards = function (_a) {
     var _b, _c, _d, _e, _f;
     var item = _a.item;
-    var _g = api_1.api.cards.getAll.useQuery(), data = _g.data, error = _g.error, refetch = _g.refetch;
+    var refetch = api_1.api.cards.getAll.useQuery().refetch;
     var deleteCard = api_1.api.cards.deleteCard.useMutation().mutateAsync;
     var updateCard = api_1.api.cards.updateCard.useMutation().mutateAsync;
     console.log(item.id);
-    var _h = react_2.useState(false), showDelete = _h[0], setShowDelete = _h[1];
-    var _j = react_2.useState(false), showPreview = _j[0], setShowPreview = _j[1];
-    var _k = react_2.useState(false), showEdit = _k[0], setShowEdit = _k[1];
+    var _g = react_2.useState(false), showDelete = _g[0], setShowDelete = _g[1];
+    var _h = react_2.useState(false), showPreview = _h[0], setShowPreview = _h[1];
+    var _j = react_2.useState(false), showEdit = _j[0], setShowEdit = _j[1];
     var deleteHandleClose = function () { return setShowDelete(false); };
     var deleteHandleShow = function () { return setShowDelete(true); };
     var previewHandleClose = function () { return setShowPreview(false); };
@@ -87,10 +87,10 @@ var Cards = function (_a) {
         });
     }); };
     return (react_1["default"].createElement(Card_1["default"], { className: "shadow-2xl", style: { width: "18rem" } },
-        react_1["default"].createElement(Card_1["default"].Img, { variant: "top", src: "https://images.ygoprodeck.com/images/cards/" + item.id + ".jpg", alt: "Card Image" }),
+        react_1["default"].createElement(Card_1["default"].Img, { variant: "top", src: "https://images.ygoprodeck.com/images/cards/" + (item === null || item === void 0 ? void 0 : item.id) + ".jpg", alt: "Card Image" }),
         react_1["default"].createElement(Card_1["default"].Body, null,
-            react_1["default"].createElement(Card_1["default"].Title, null, item.CardName),
-            react_1["default"].createElement(Card_1["default"].Text, null, item.Description)),
+            react_1["default"].createElement(Card_1["default"].Title, null, item === null || item === void 0 ? void 0 : item.CardName),
+            react_1["default"].createElement(Card_1["default"].Text, null, item === null || item === void 0 ? void 0 : item.Description)),
         react_1["default"].createElement(Card_1["default"].Body, { className: "flex max-h-14 items-center justify-between border-t-2 border-gray-100\n      " },
             react_1["default"].createElement(tfi_1.TfiViewListAlt, { size: 30, className: "cursor-pointer", onClick: previewHandleShow }),
             react_1["default"].createElement(Dropdown_1["default"], null,

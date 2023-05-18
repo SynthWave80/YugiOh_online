@@ -3,7 +3,6 @@ exports.__esModule = true;
 var react_1 = require("react");
 var react_paginate_1 = require("react-paginate");
 var cards_1 = require("./cards");
-var skeleton_1 = require("./skeleton");
 // Example items, to simulate fetching from another resources.
 function Items(_a) {
     var currentItems = _a.currentItems, cards = _a.cards, isLoading = _a.isLoading;
@@ -28,8 +27,6 @@ function PaginatedItems(_a) {
         setItemOffset(newOffset);
     };
     return (react_1["default"].createElement("div", { className: "flex min-w-full flex-col items-center justify-center" },
-        react_1["default"].createElement("div", { className: "grid grid-cols-4 gap-4 pb-5" }, isLoading &&
-            Array.from({ length: itemsPerPage }).map(function (_, index) { return (react_1["default"].createElement(skeleton_1["default"], { key: index })); })),
         react_1["default"].createElement(Items, { currentItems: currentItems, cards: cards, isLoading: isLoading }),
         react_1["default"].createElement(react_paginate_1["default"], { breakLabel: "...", nextLabel: "Next >", onPageChange: handlePageClick, pageRangeDisplayed: 5, pageCount: pageCount, previousLabel: "< Previous", renderOnZeroPageCount: null, activeClassName: "item active ", breakClassName: "item break-me ", containerClassName: "pagination", disabledClassName: "disabled-page", nextClassName: "item next ", pageClassName: "item pagination-page ", previousClassName: "item previous" })));
 }

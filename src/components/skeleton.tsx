@@ -5,9 +5,9 @@ import { Placeholder, Spinner } from "react-bootstrap";
 
 const Skeleton = () => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="d-flex justify-content-around">
       <Card style={{ width: "18rem" }}>
-        <Spinner animation="border" className="mx-auto " />
+        <Spinner className="mx-auto p-4" />
         <Card.Body>
           <Placeholder as={Card.Title} animation="glow">
             <Placeholder xs={6} />
@@ -16,7 +16,10 @@ const Skeleton = () => {
             <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{" "}
             <Placeholder xs={6} /> <Placeholder xs={8} />
           </Placeholder>
-          <Placeholder.Button variant="primary" xs={6} />
+          <div className="flex items-center justify-between">
+            <Placeholder.Button variant="primary" xs={3} />
+            <Placeholder.Button variant="primary" xs={3} />
+          </div>
         </Card.Body>
       </Card>
     </div>

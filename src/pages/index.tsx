@@ -5,7 +5,7 @@ import Link from "next/link";
 import { api } from "@/utils/api";
 import PaginatedItems from "@/components/pagination";
 import { Spinner } from "react-bootstrap";
-import { Skeleton } from "@mui/material";
+import Skeleton from "@/components/skeleton";
 import { Card, Placeholder } from "react-bootstrap";
 
 const Home: NextPage = () => {
@@ -24,12 +24,22 @@ const Home: NextPage = () => {
         <div className="text-5xl text-white">YuGiOh db.</div>
       </div>
 
-      <div className="flex min-h-full min-w-full bg-gradient-to-b from-blue-500 to-sky-950 p-4 ">
-        <PaginatedItems
-          itemsPerPage={items}
-          cards={data}
-          isLoading={isLoading}
-        />
+      <div className="flex min-h-full min-w-full items-center justify-center bg-gradient-to-b from-blue-500 to-sky-950 p-4 ">
+        {isLoading && (
+          <div className=" grid grid-cols-4  gap-4 pb-5">
+            {Array.from({ length: items }).map((_, index) => (
+              <Skeleton key={index} />
+            ))}
+          </div>
+        )}
+
+        {data && (
+          <PaginatedItems
+            itemsPerPage={items}
+            cards={data}
+            isLoading={isLoading}
+          />
+        )}
       </div>
     </>
   );

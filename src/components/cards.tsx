@@ -25,7 +25,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
 const Cards = ({ item }: { item: YuGiOhDb }) => {
-  const { data, error, refetch } = api.cards.getAll.useQuery();
+  const { refetch } = api.cards.getAll.useQuery();
   const { mutateAsync: deleteCard } = api.cards.deleteCard.useMutation();
   const { mutateAsync: updateCard } = api.cards.updateCard.useMutation();
 
@@ -54,13 +54,13 @@ const Cards = ({ item }: { item: YuGiOhDb }) => {
     <Card className="shadow-2xl" style={{ width: "18rem" }}>
       <Card.Img
         variant="top"
-        src={`https://images.ygoprodeck.com/images/cards/${item.id}.jpg`}
+        src={`https://images.ygoprodeck.com/images/cards/${item?.id}.jpg`}
         alt="Card Image"
       />
 
       <Card.Body>
-        <Card.Title>{item.CardName}</Card.Title>
-        <Card.Text>{item.Description}</Card.Text>
+        <Card.Title>{item?.CardName}</Card.Title>
+        <Card.Text>{item?.Description}</Card.Text>
       </Card.Body>
       <Card.Body
         className="flex max-h-14 items-center justify-between border-t-2 border-gray-100
