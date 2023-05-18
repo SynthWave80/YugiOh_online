@@ -87,10 +87,14 @@ export const cardsRouter = createTRPCRouter({
   }),
 
   getCardsLike: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-    return ctx.prisma.yuGiOhDb.findMany({
-      where: {
-        CardName: { contains: input },
-      },
-    });
+    if (input.length > 1) {
+      return ctx.prisma.yuGiOhDb.findMany({
+        where: {
+          CardName: { contains: input },
+        },
+      });
+    } else {
+      return null;
+    }
   }),
 });
