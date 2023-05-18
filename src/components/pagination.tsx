@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import ReactPaginate from "react-paginate";
 import Cards from "./cards";
+import Skeleton from "./skeleton";
 
 interface PageEvent {
   selected: number;
@@ -14,12 +15,17 @@ interface PageEvent {
 function Items({
   currentItems,
   cards,
+  isLoading,
 }: {
   currentItems: YuGiOhDb[] | undefined;
   cards: YuGiOhDb[] | undefined;
+  isLoading: boolean;
 }) {
   return (
     <div className="grid grid-cols-4 gap-4 pb-5">
+      {/* Skeleton loading */}
+
+      {/* Actual items */}
       {currentItems?.map((item) => (
         <Cards item={item} />
       ))}
@@ -30,9 +36,11 @@ function Items({
 export default function PaginatedItems({
   itemsPerPage,
   cards,
+  isLoading,
 }: {
   itemsPerPage: number;
   cards: YuGiOhDb[] | undefined;
+  isLoading: boolean;
 }) {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
@@ -57,7 +65,13 @@ export default function PaginatedItems({
 
   return (
     <div className="flex min-w-full flex-col items-center justify-center">
-      <Items currentItems={currentItems} cards={cards} />
+      <div className="grid grid-cols-4 gap-4 pb-5">
+        {isLoading &&
+          Array.from({ length: itemsPerPage }).map((_, index) => (
+            <Skeleton key={index} />
+          ))}
+      </div>
+      <Items currentItems={currentItems} cards={cards} isLoading={isLoading} />
       <ReactPaginate
         breakLabel="..."
         nextLabel="Next >"

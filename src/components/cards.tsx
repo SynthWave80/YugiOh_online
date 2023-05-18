@@ -19,7 +19,7 @@ import { BiLink } from "react-icons/bi";
 import { HiOutlineScale } from "react-icons/hi";
 import { MdOutlineDescription } from "react-icons/md";
 import { api } from "@/utils/api";
-import { Alert } from "react-bootstrap";
+import { Alert, FloatingLabel } from "react-bootstrap";
 import { Formik, Field } from "formik";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -27,6 +27,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 const Cards = ({ item }: { item: YuGiOhDb }) => {
   const { data, error, refetch } = api.cards.getAll.useQuery();
   const { mutateAsync: deleteCard } = api.cards.deleteCard.useMutation();
+  const { mutateAsync: updateCard } = api.cards.updateCard.useMutation();
 
   console.log(item.id);
   const [showDelete, setShowDelete] = useState(false);
@@ -163,7 +164,7 @@ const Cards = ({ item }: { item: YuGiOhDb }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-
+      {/* Edit Modal */}
       <Modal show={showEdit} onHide={editHandleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Editing ...</Modal.Title>
@@ -175,33 +176,63 @@ const Cards = ({ item }: { item: YuGiOhDb }) => {
 
           <Formik
             initialValues={{
-              firstName: "",
-              lastName: "",
-              email: "",
+              id: item.id,
+              CardName: item.CardName,
+              CardType: item.CardType ? item.CardType : "",
+              Attribute: item.Attribute ? item.Attribute : "",
+              Property: item.Property ? item.Property : "",
+              Types: item.Types ? item.Types : "",
+              Level: item.Level ? item.Level : -1,
+              ATK: item.ATK ? item.ATK : -1,
+              DEF: item.DEF ? item.DEF : -1,
+              Link: item.Link ? item.Link : -1,
+              PendulumScale: item.PendulumScale ? item.PendulumScale : -1,
+              Description: item.Description ? item.Description : "",
             }}
             onSubmit={async (values) => {
-              await new Promise((r) => setTimeout(r, 500));
-              alert(JSON.stringify(values, null, 2));
+              try {
+                await updateCard(values);
+                await refetch();
+                editHandleClose();
+              } catch (error) {
+                console.log(error);
+              }
             }}
           >
-            <Form>
-              <div className="flex">
-                <InputGroup className="mb-3 flex flex-col">
-                  <InputGroup.Text>Card Name</InputGroup.Text>
-                  <InputGroup.Text>Card Type</InputGroup.Text>
-                  <InputGroup.Text>Attribute</InputGroup.Text>
-                  <InputGroup.Text>Property</InputGroup.Text>
-                  <InputGroup.Text>Types</InputGroup.Text>
-                  <InputGroup.Text>Level</InputGroup.Text>
-                  <InputGroup.Text>ATK</InputGroup.Text>
-                  <InputGroup.Text>DEF</InputGroup.Text>
-                  <InputGroup.Text>LINK</InputGroup.Text>
-                  <InputGroup.Text>PendulumScale</InputGroup.Text>
-                  <InputGroup.Text>Description</InputGroup.Text>
-                </InputGroup>
-              </div>
-              <button type="submit">Submit</button>
-            </Form>
+            {({ errors, touched }) => (
+              <Form>
+                <div className="flex items-center justify-center ">
+                  <div className="flex flex-col">
+                    <label htmlFor="Card Name">Card Name</label>
+                    <label htmlFor="Card Type">Card Type</label>
+                    <label htmlFor="Attribute">Attribute</label>
+                    <label htmlFor="Property">Property</label>
+                    <label htmlFor="Types">Types</label>
+                    <label htmlFor="Level">Level</label>
+                    <label htmlFor="ATK">ATK </label>
+                    <label htmlFor="DEF">DEF</label>
+                    <label htmlFor="LINK">LINK</label>
+                    <label htmlFor="PendulumScale">Pendulum Scale</label>
+                    <label htmlFor="Description">Description</label>
+                  </div>
+                  <div className="flex flex-col">
+                    <Field id="CardName" name="CardName" />
+                    <Field id="CardType" name="CardType" />
+                    <Field id="Attribute" name="Attribute" />
+                    <Field id="Property" name="Property" />
+                    <Field id="Types" name="Types" />
+                    <Field id="Level" name="Level" />
+                    <Field id="ATK" name="ATK" />
+                    <Field id="DEF" name="DEF" />
+                    <Field id="Link" name="Link" />
+                    <Field id="PendulumScale" name="PendulumScale" />
+                    <Field id="Description" name="Description" />
+                  </div>
+                </div>
+
+                <button type="submit">Submit</button>
+              </Form>
+            )}
           </Formik>
         </Modal.Body>
         <Modal.Footer>

@@ -2,6 +2,7 @@ import { object, z } from "zod";
 import { cards } from "@/utils/cardsInterface";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { error } from "console";
 
 export const cardsRouter = createTRPCRouter({
   hello: publicProcedure

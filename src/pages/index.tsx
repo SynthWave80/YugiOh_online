@@ -4,9 +4,13 @@ import Link from "next/link";
 
 import { api } from "@/utils/api";
 import PaginatedItems from "@/components/pagination";
+import { Spinner } from "react-bootstrap";
+import { Skeleton } from "@mui/material";
+import { Card, Placeholder } from "react-bootstrap";
 
 const Home: NextPage = () => {
-  const { data, error, refetch } = api.cards.getAll.useQuery();
+  const { data, error, refetch, isLoading } = api.cards.getAll.useQuery();
+  const items = 12;
 
   return (
     <>
@@ -21,7 +25,11 @@ const Home: NextPage = () => {
       </div>
 
       <div className="flex min-h-full min-w-full bg-gradient-to-b from-blue-500 to-sky-950 p-4 ">
-        <PaginatedItems itemsPerPage={12} cards={data} />
+        <PaginatedItems
+          itemsPerPage={items}
+          cards={data}
+          isLoading={isLoading}
+        />
       </div>
     </>
   );
