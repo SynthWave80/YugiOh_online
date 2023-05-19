@@ -90,7 +90,7 @@ const Cards = ({ item }: { item: YuGiOhDb }) => {
           <Modal.Title>Alert</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure about deleting this powerful card ?!
+          The card will be permanently deleted, are you sure?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={deleteHandleClose}>

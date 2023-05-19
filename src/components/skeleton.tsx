@@ -5,7 +5,7 @@ import { Placeholder, Spinner } from "react-bootstrap";
 
 const Skeleton = () => {
   return (
-    <Card className=" w-52">
+    <Card className="w-52">
       <Spinner className="mx-auto p-4" />
       <Card.Body>
         <Placeholder as={Card.Title} animation="glow">
